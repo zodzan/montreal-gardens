@@ -1,0 +1,30 @@
+{
+  "name": "bus",
+  "version": "1.0.0",
+  "description": "bus micro-service",
+  "main": "app.js",
+  "scripts": {
+    "devstart": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zodzan/montreal-gardens.git"
+  },
+  "keywords": [
+    "garden",
+    "bus"
+  ],
+  "author": "Alexandre El-Ammar",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zodzan/montreal-gardens/issues"
+  },
+  "homepage": "https://github.com/zodzan/montreal-gardens#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
