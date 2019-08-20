@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  postgres_bus:
+    image: mdillon/postgis:11
+    container_name: postgres_bus
+    volumes:
+      - ./docker_volumes/postgresql/data/bus_db:/var/lib/postgresql/data
+    ports:
+      - "5530:5432"
+    environment:
+      POSTGRES_USER: bus
+      POSTGRES_PASSWORD: bus
+      POSTGRES_DB: busdb
