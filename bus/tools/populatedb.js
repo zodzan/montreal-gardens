@@ -7,7 +7,7 @@ const stmStopsJsonPath = "../data/stm/stm-stops.json";
 const loadLocalData = () => {
   const localData = require(stmStopsJsonPath);
 
-  return stopService.insertStopList(localData);
+  return stopService.insertStops(localData);
 };
 
 module.exports = { loadLocalData };
