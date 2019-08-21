@@ -1,9 +1,13 @@
 const stopReposistory = require("../repositories/stop.repository");
 
-const insertStopList = stopData => {
-  const stopList = stopData.features;
+const insertStops = stopsData => {
+  const stops = stopsData.features;
 
-  return stopReposistory.insertStopList(stopList);
+  return stopReposistory.insertStops(stops);
 };
 
-module.exports = { insertStopList };
+const getStopsByDistance = query => {
+  return stopReposistory.selectStopsByDistance(query);
+};
+
+module.exports = { insertStops, getStopsByDistance };

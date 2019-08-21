@@ -3,12 +3,16 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const stopRouter = require("./routes/stop.routes");
+
 const knex = require("./services/database");
 const populatedb = require("./tools/populatedb");
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use("/", stopRouter);
 
 knex
   .initDatabase()

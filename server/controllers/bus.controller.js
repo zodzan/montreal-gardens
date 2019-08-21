@@ -1,5 +1,5 @@
-const getBusStops = async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: get bus stops');
+const getBusStopsByDistance = async (req, res, next) => {
+    res.send('NOT IMPLEMENTED: get bus stops by distance');
 };
 
-module.exports = { getBusStops };
+module.exports = { getBusStopsByDistance };
