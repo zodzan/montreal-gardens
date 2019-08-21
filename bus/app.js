@@ -4,27 +4,32 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const knex = require("./services/database");
-const populate = require("./tools/populatedb");
+const populatedb = require("./tools/populatedb");
 
 const app = express();
 
 app.use(bodyParser.json());
 
-knex.test();
-knex.clearDatabase().then(res => {
-  knex.initDatabase().then(res => {
+knex
+  .initDatabase()
+  .then(() => {
+    console.log("Database: Initialized.");
+  })
+  .catch(err => {
+    console.log("Database: Error initializing.");
+  })
+  .then(() => {
     if (process.env.OFFLINE_MODE) {
-      populate
+      populatedb
         .loadLocalData()
-        .then(res => {
-          console.log("Local data insertion successful.");
+        .then(() => {
+          console.log("Database: Populated.");
         })
         .catch(err => {
-          console.log("Local data insertion error.");
+          console.log("Database: Error populating.");
         });
     }
   });
-});
 
 app.listen(process.env.PORT, () => {
   console.log("Bus service listening on PORT " + process.env.PORT + ".");
