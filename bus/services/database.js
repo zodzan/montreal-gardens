@@ -16,31 +16,34 @@ const db = knex({
 
 const st = knexPostgis(db);
 
-const test = async () => {
-  await db
-    .raw("SELECT 1+1 AS result")
-    .then(res => {
-      console.log("Database connection successful.");
-    })
-    .catch(err => {
-      console.log("Database connection error.");
-    });
+const testDatabaseConnection = async () => {
+  return await db.raw("SELECT 1+1 AS result");
+};
+
+const createStopsTable = async () => {
+  return await db.schema.createTable("stops", table => {
+    table.string("id").primary();
+    table.string("name").notNullable();
+    table.specificType("geometry", "geography(POINT, 4326)").notNullable();
+  });
+};
+
+const dropDatabase = async () => {
+  return await db.schema.dropTableIfExists("stops");
+};
+
+const deleteStops = async () => {
+  return await db("stops").del();
 };
 
 const initDatabase = async () => {
+  testDatabaseConnection();
   let stopsExists = await db.schema.hasTable("stops");
-
   if (!stopsExists) {
-    await db.schema.createTable("stops", table => {
-      table.string("id").primary();
-      table.string("name").notNullable();
-      table.specificType("geometry", "geography(POINT, 4326)").notNullable();
-    });
+    return createStopsTable();
+  } else {
+    return deleteStops();
   }
 };
 
-const clearDatabase = async () => {
-  await db.schema.dropTableIfExists("stops");
-};
-
-module.exports = { db, st, test, initDatabase, clearDatabase };
+module.exports = { db, st, initDatabase };
