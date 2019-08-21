@@ -38,12 +38,14 @@ const deleteStops = async () => {
 
 const initDatabase = async () => {
   testDatabaseConnection();
-  let stopsExists = await db.schema.hasTable("stops");
-  if (!stopsExists) {
-    return createStopsTable();
-  } else {
-    return deleteStops();
-  }
+  
+  return await db.schema.hasTable("stops").then(exists => {
+    if (!exists) {
+      return createStopsTable();
+    } else {
+      return deleteStops();
+    }
+  });
 };
 
 module.exports = { db, st, initDatabase };
