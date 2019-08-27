@@ -37,9 +37,9 @@ const getStopsByDistance = query => {
   }
 
   if (errors.length > 0) {
-    return Promise.reject(errors);
+    return Promise.reject({ type: errorTypes.INVALID_QUERY, errors });
   } else {
-    return Promise.resolve();
+    return stopReposistory.selectStopsByDistance(query);
   }
 };
 
