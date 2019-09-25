@@ -3,6 +3,6 @@ const router = express.Router();
 
 const stopController = require('../controllers/stop.controller');
 
-router.get('/api/bus-stops', stopController.getStopsByDistance);
+router.get('/v1/stops', stopController.getStopsByDistance);
 
 module.exports = router;
