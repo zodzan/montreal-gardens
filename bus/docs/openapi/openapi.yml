@@ -1,0 +1,98 @@
+openapi: 3.0.2
+
+info:
+  title: Bus Service API
+  description: Montreal bus information service
+  version: '1.0'
+
+servers:
+  - url: 'http://localhost:{port}/{basePath}'
+    description: Development server
+    variables:
+      port:
+        default: '7190'
+      basePath:
+        default: v1
+
+components:
+  schemas:
+    Geometry:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: number
+    Stop:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        geometry:
+          $ref: '#/components/schemas/Geometry'
+    Error:
+      type: object
+      properties:
+        parameter:
+          type: string
+        message:
+          type: string
+
+  responses:
+    GetStopsOK:
+      description: Request succeeded
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Stop'
+    BadRequest:
+      description: 'Invalid request: The client has formulated a request that has been rejected by the service'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+  parameters:
+    radius:
+      name: radius
+      in: query
+      required: true
+      description: The search radius
+      schema:
+        type: number
+    lat:
+      name: lat
+      in: query
+      required: true
+      description: The coordinates' latitude
+      schema:
+        type: number
+    lng:
+      name: lng
+      in: query
+      required: true
+      description: The coordinates' longitude
+      schema:
+        type: number
+
+paths:
+  /stops:
+    get:
+      description: Requests a list of bus stops with provided point coordinates and search radius
+      parameters:
+        - $ref: '#/components/parameters/lng'
+        - $ref: '#/components/parameters/lat'
+        - $ref: '#/components/parameters/radius'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetStopsOK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
