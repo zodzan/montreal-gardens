@@ -37,8 +37,6 @@ const deleteStops = async () => {
 };
 
 const initDatabase = async () => {
-  testDatabaseConnection();
-
   return await db.schema.hasTable("stops").then(exists => {
     if (!exists) {
       return createStopsTable();
